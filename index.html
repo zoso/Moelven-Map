@@ -44,35 +44,95 @@
             function createMarker() {
                 
             };
-            
-            var mapmenu = $("#menu-map");
-            getData("data.js", function(data) {
-                for (var o in data) {
-                    mapmenu.append('<div id="'+data[o].title+'" class="accordion-box">'+data[o].title+'</div>');
-                    var cont = $("#"+data[o].title);
-                    cont.append('<ul>');
-                    for (j in data[o].data) {
-                        //console.log("  "+j+" > "+data[o].data[j].name);
-                        var str = data[o].data[j].lat+","+data[o].data[j].lng;
-                        cont.append('<li class="box"><a href="#" data-rel="'+str+'">'+data[o].data[j].name+'</a></li>');
-                    }
-                    cont.append("</ul>");
+
+            function viewSubMenu(id, callback) {
+                submenu.html('');
+                for (var i in mapdata[id].data) {
+                    var ref = id+","+i;
+                    submenu.append('<div class="box"><a href="#" data-ref="'+ref+'">'+mapdata[id].data[i].name+'</a></div>');
                 }
+                callback("hello - the menus are made");
+            }
+
+            var mapdata = [];
+            var mapmenu = $("#map-menu");
+            var submenu = $("#map-content");
+
+            getData("data.js", function(data) {
+                mapdata = data;
+                //create menu
+                for (var i in data) {
+                    mapmenu.append('<div class="box"><a href="#" data-id="'+i+'"">'+data[i].title+'</a></div>');
+                }
+                // for (var o in data) {
+                //     mapmenu.append('<div id="'+data[o].title+'" class="accordion-box">'+data[o].title+'</div>');
+                //     var cont = $("#"+data[o].title);
+                //     cont.append('<ul>');
+                //     for (j in data[o].data) {
+                //         //console.log("  "+j+" > "+data[o].data[j].name);
+                //         var str = data[o].data[j].lat+","+data[o].data[j].lng;
+                //         cont.append('<li class="box"><a href="#" data-rel="'+str+'">'+data[o].data[j].name+'</a></li>');
+                //     }
+                //     cont.append("</ul>");
+                // }
                 setup();
             });
+
+
             
             function setup() {
                 console.log("setup");
-                $("li a").on("click", function(e) {
-                    e.preventDefault();
-                    console.log($(this).data("rel"));
-                    var arr = $(this).data("rel").split(",");
-                    var dest = new google.maps.LatLng(arr[0], arr[1]);
-                    goto(dest);
+                viewSubMenu(0, function(res) {
+                    console.log("> "+res);
                 });
+                $("#map-menu a").on("click", function(e) {
+                    e.preventDefault();
+                    console.log("> "+$(this).data("id"));
+                    viewSubMenu($(this).data("id"), function(res) {
+                        $("#map-content a").on("click", function(e) {
+                            e.preventDefault();
+                           
+                            goto($(this).data("ref"));
+                            console.log(">> > "+$(this).data("ref"));
+                        })
+                    })
+                });
+
+                $("#map-content a").on("click", function(e) {
+                    e.preventDefault();
+                    console.log(">> > "+$(this).data("ref"));
+                    
+                    goto($(this).data("ref"));
+                })    
+                // $("li a").on("click", function(e) {
+                //     e.preventDefault();
+                //     console.log($(this).data("rel"));
+                //     var arr = $(this).data("rel").split(",");
+                //     var dest = new google.maps.LatLng(arr[0], arr[1]);
+                //     goto(dest);
+                // });
             }
             
+            /*
+            - create a menu with 4 rows on the left
+            - create a container for the subsections
+            - onClick change content
+        
+            */
 
+            function goto(d) {
+                var arr = d.split(",");
+                var dest = new google.maps.LatLng(mapdata[arr[0]].data[arr[1]].lat, mapdata[arr[0]].data[arr[1]].lng);
+                map.setCenter(dest);
+                var t = " > "+ mapdata[arr[0]].data[arr[1]].name;
+                marker = new google.maps.Marker({
+                      position: dest, 
+                      map: map, 
+                      title: t,
+                      
+                      zIndex: 0
+                });
+        }
 
 
             initialize();
@@ -111,16 +171,7 @@
 
         
           
-        function goto(dest) {
-            map.setCenter(dest);
-            marker = new google.maps.Marker({
-                  position: dest, 
-                  map: map, 
-                  title: '',
-                  
-                  zIndex: 0
-            });
-        }
+        
       
 
     </script>
@@ -150,13 +201,15 @@
         }
 
         .box {
-            width: 211px;
+            width: 150px;
             height: 40px;
             border-bottom: 1px solid #fff;
             border-right: 1px solid #fff;
             background-color: #ebf3f7;
             float: left;
+            font-size: 11px;
             text-align: center;
+            font-family: Verdana;
         }
 
         ul {
@@ -182,13 +235,20 @@
   </head>
   <body>
     <div>Maps</div>
-    <div id="map_canvas" style="width:100%; height:500px"></div>
+     <div id="map">
+        <div id="map-menu" style="width: 160px; float: left;">
+            
+        </div>
+        <div id="map-content" style="float: left; border: 1px solid #333; width: 760px;">
+            
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div id="map_canvas" style="width:920px; height:500px"></div>
     <div id="log">
         <a href="http://gmaps-samples-v3.googlecode.com/svn/trunk/geocoder/getlatlng.html">http://gmaps-samples-v3.googlecode.com/svn/trunk/geocoder/getlatlng.html</a>
     </div>
-    <div id="menu-map">
-
-    </div>
+   
     <!--<div id="timber" class="accordion-box">
         <div>Timber</div>
         <ul>

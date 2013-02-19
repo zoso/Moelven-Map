@@ -1,0 +1,167 @@
+Moelven Industrier ASA		
+Industrivegen 2
+NO-2390 Moelv
+Tel. +47 62 34 70 00
+60.93358672857066, 10.691110600000002)
+
+Moelven Are AS
+Løvestad Industriområde
+NO-1820 Spydeberg
+Tel. +47 69 83 67 10
+Lat/Lng:	(59.622365831866055, 11.043929996374553)
+Address:	Knapstadveien, 1820 Spydeberg, Norway
+
+
+Moelven Bioenergi AS
+Strandsagvegen 4
+NO-2383 Brumunddal
+Tel. +47 62 34 70 00
+(60.884024828512544, 10.931542000000036)
+
+Moelven ByggModul AS
+Industrivegen 12 
+NO-2390 Moelv 
+Tel. +47 62 34 70 00 
+(60.93738612857514, 10.687898099999984)
+
+Moelven Eidsvold Værk AS
+Sagveien 10
+NO-2074 Eidsvoll Verk
+Tel. +47 95 11 94 15
+(60.2979267278388, 11.161479399999962)
+
+Moelven Eidsvoll AS
+Myrer
+NO-2080 Eidsvoll
+Tel. +47 63 92 48 80
+(60.32921022596573,11.223439646295231)
+Address:	Myrersvingen 370, 2080 Eidsvoll, Norway
+
+
+Moelven Elektro AS 
+Ensjøveien 3
+NO-0655 Oslo 
+Tel. +47 23 03 78 00
+	(59.91634732741296, 10.7837356)
+
+
+Moelven Langmoen AS
+Strandsagvegen 4
+NO-2383 Brumunddal
+Tel. +47 62 33 27 00
+(60.884024828512544, 10.931542000000036)
+
+
+Moelven Limtre AS 
+Lundemovegen 1
+NO-2390 Moelv 
+Tel. +47 06 123
+(60.92929992856564, 10.696789999999964)
+
+Moelven Løten AS
+Rokosjøen, 
+NO-2340 Løten
+Tel. +47 62 54 75 00
+	(60.785408937872695, 11.46101484999997)
+
+
+Moelven Mjøsbruket AS
+Industrivegen, NO-2836 Biri
+Tel. +47 61 14 52 00
+(60.96375717994962, 10.610400634362808)
+Address:	Industrivegen 35, 2836 Biri, Norway
+
+Moelven Multi3 AS
+Industrivegen 4 
+NO-2390 Moelv
+Tel. +47 62 34 70 00
+(60.93231152856916, 10.691341950000037)
+
+Moelven Nordia AS
+Asfaltvegen 1
+NO-2051 Jessheim 
+Tel. +47 06050
+(60.145423027667405, 11.181598000000008)
+
+Moelven Numedal AS
+Beliggende nær Flesberg kirke
+NO-3620 Flesberg
+Tel. +47 32 29 50 00
+	(59.86240059366515, 9.43190815686946)
+
+
+Moelven Soknabruket AS
+Normoveien,
+NO-3534 Sokna
+Tel. +47 32 14 45 00
+(60.240958600460466, 9.949705633496023)
+Address:	Nordmoveien 48, Soknabruket, 3534 Sokna, Norway
+
+
+Moelven Telemarksbruket AS
+Rotebergvegen 21, NO-3800 Bø
+Tel. +47 35 95 44 00
+	(59.41196962686493, 9.093444399999953)
+
+
+Moelven Timber AS
+Industrivegen 2
+NO-2390 Moelv
+Tel. +47 62 34 70 00
+60.93358672857066, 10.691110600000002)
+
+
+Moelven Treinteriør AS
+Nordre Kongsveg 56
+NO-2372 Brøttum
+Tel. +47 62 35 97 77
+61.00832032865862, 10.554624799999942
+
+Moelven Trysil AS
+Slettmovegen 34, 2420 Trysil
+Tel:+47 62 45 21 00
+60.253660027788875, 10.98529719999999
+	
+Moelven Van Severen AS
+Pinavegen 5
+NO-7800 Namsos
+Tel. +47 74 21 33 00
+64.46241253323761, 11.50895109999999
+
+Moelven Virke AS
+Industrivegen 2
+NO-2391 Moelv
+Tel. +47 62 34 70 00
+60.93358672857066, 10.691110600000002
+
+Moelven Våler AS
+Stasjonsveien
+NO-2435 Braskereidfoss
+Tel. +47 62 42 80 00
+60.71752714152787, 11.808127109570247
+
+Moelven Wood AS
+Sagveien
+NO-2074 Eidsvoll Verk
+Tel. +47 63 95 97 50
+60.2979267278388, 11.161479399999962
+
+Moelven Wood Skandinavia AS
+Industrivegen 2
+NO-2391 Moelv
+Tel. +47 62 34 70 00
+60.93358672857066, 10.691110600000002
+
+
+Moelven Østerdalsbruket AS
+Industriveien 133
+NO-2480 Koppang
+Tel. +47 62 46 29 00
+61.57797485543661, 11.03686248465577
+
+
+
+
+
+
+

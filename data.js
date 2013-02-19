@@ -1,5 +1,42 @@
 [
 	{
+		"title": "Konsern",
+		"data" : [
+			{
+				"name": "Konsern 1",
+				"address" : "",
+				"postalnr" : "",
+				"phone": "",
+				"lat" : "",
+				"lng" : ""
+			},
+			{
+				"name": "Konsern 2",
+				"address" : "",
+				"postalnr" : "",
+				"phone": "",
+				"lat" : "",
+				"lng" : ""
+			},
+			{
+				"name": "Konsern 3",
+				"address" : "",
+				"postalnr" : "",
+				"phone": "",
+				"lat" : "",
+				"lng" : ""
+			},
+			{
+				"name": "Konsern 4",
+				"address" : "",
+				"postalnr" : "",
+				"phone": "",
+				"lat" : "",
+				"lng" : ""
+			}
+		]
+	},
+	{
 		"title": "Timber",
 		"data": [
 			{
