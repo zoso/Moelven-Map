@@ -8,16 +8,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
       html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
+      body { height: 100%; margin: 0; padding: 0; font-family: Verdana; font-size: 11px; }
       #map_canvas { height: 100% }
     </style>
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSl7ioT2_AhBS-L-ZDIOjowKD2k7N1IVk&sensor=false">
     </script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="js/infobox.js"></script>
     <script type="text/javascript">
         var map;
         var marker;
+        var ib;
+        var markerArr = [];
+        var infoArr = [];
         $(document).ready(function() {
             $(".box a").on("click", function(e) {
                e.preventDefault();
@@ -47,13 +51,62 @@
                 
             };
 
-            function viewSubMenu(id, callback) {
-                submenu.html('');
+            function getColor(str, type) {
+                var c = "";
+                switch(str.toLowerCase()) {
+                    case "konsern":
+                        c = "konsern-blue";
+                        break;
+                    case "timber":
+                        c = "timber-green";
+                        break;
+                    case "wood":
+                        c = "wood-brown";    
+                        break;
+                    case "byggsystemer":
+                        c = "bygg-red";
+                        break;
+
+                }
+
+                if (type == "sub") c = c+"-light";
+                return c;
+            }
+
+            function randomNumber(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function drawSubMenu(id, callback) {
                 for (var i in mapdata[id].data) {
                     var ref = id+","+i;
-                    submenu.append('<div class="box"><a href="#" data-ref="'+ref+'">'+mapdata[id].data[i].name+'</a></div>');
+                    var str = '<div class="box '+getColor(mapdata[id].title, "sub")+'">';
+                        str += '<div style="line-height: 40px;">'
+                        str += '<a href="#" data-ref="'+ref+'">'+mapdata[id].data[i].name+'</a>';
+                        str += '</div></div>';
+                    submenu.append(str);
                 }
-                callback("hello - the menus are made");
+                callback("drawing the submenu");
+            }
+
+            function viewSubMenu(id, callback) {
+                console.log("children "+submenu.children().length);
+                var count = 0;
+                if (submenu.children().length > 0) {
+                    submenu.children().each(function() {
+                        $(this).animate({
+                            opacity: 0
+                        }, 1000+(count+1), function() {
+                            count++;
+                            if (count == submenu.children().length) {
+                                submenu.html('');
+                                drawSubMenu(id, callback);
+                            }
+                        });
+                    })
+                } else {
+                    drawSubMenu(id, callback);
+                }
             }
 
             var mapdata = [];
@@ -64,19 +117,8 @@
                 mapdata = data;
                 //create menu
                 for (var i in data) {
-                    mapmenu.append('<div class="box"><a href="#" data-id="'+i+'"">'+data[i].title+'</a></div>');
+                    mapmenu.append('<div class="box '+getColor(data[i].title)+'"><div style="line-height: 40px;"><a href="#" data-id="'+i+'">'+data[i].title+'</a></div></div>');
                 }
-                // for (var o in data) {
-                //     mapmenu.append('<div id="'+data[o].title+'" class="accordion-box">'+data[o].title+'</div>');
-                //     var cont = $("#"+data[o].title);
-                //     cont.append('<ul>');
-                //     for (j in data[o].data) {
-                //         //console.log("  "+j+" > "+data[o].data[j].name);
-                //         var str = data[o].data[j].lat+","+data[o].data[j].lng;
-                //         cont.append('<li class="box"><a href="#" data-rel="'+str+'">'+data[o].data[j].name+'</a></li>');
-                //     }
-                //     cont.append("</ul>");
-                // }
                 setup();
             });
 
@@ -84,7 +126,7 @@
             
             function setup() {
                 console.log("setup");
-                viewSubMenu(0, function(res) {
+                viewSubMenu(1, function(res) {
                     console.log("> "+res);
                 });
                 $("#map-menu a").on("click", function(e) {
@@ -106,13 +148,6 @@
                     
                     goto($(this).data("ref"));
                 })    
-                // $("li a").on("click", function(e) {
-                //     e.preventDefault();
-                //     console.log($(this).data("rel"));
-                //     var arr = $(this).data("rel").split(",");
-                //     var dest = new google.maps.LatLng(arr[0], arr[1]);
-                //     goto(dest);
-                // });
             }
             
             /*
@@ -127,14 +162,66 @@
                 var dest = new google.maps.LatLng(mapdata[arr[0]].data[arr[1]].lat, mapdata[arr[0]].data[arr[1]].lng);
                 map.setCenter(dest);
                 var t = " > "+ mapdata[arr[0]].data[arr[1]].name;
+                //18x32
+                var image = {
+                    url: "img/arrow_"+mapdata[arr[0]].title.toLowerCase()+".png",
+                    size: new google.maps.Size(18, 32),
+                    orgin: new google.maps.Point(0,0),
+                    anchor: new google.maps.Point(9, 32)
+                }
                 marker = new google.maps.Marker({
                       position: dest, 
                       map: map, 
                       title: t,
-                      
+                      icon: image,
                       zIndex: 0
                 });
-        }
+                
+                //infobox
+                var info =  "<div><span style='font-weight: bold;'>"+mapdata[arr[0]].data[arr[1]].name+"</span>";
+                info += "<br>"+ mapdata[arr[0]].data[arr[1]].address;
+                info += "<br>"+  mapdata[arr[0]].data[arr[1]].postalnr+"</div>";
+                
+                var opt = {
+                    content: info,
+                    disableAutoPan: false,
+                    maxWidth: 0,
+                    pixelOffset: new google.maps.Size(-140, -100),
+                    zIndex: null,
+                    boxStyle: {
+                        padding: "5px",
+                        background: "#fff",
+                        opacity: 0.9,
+                        width: "280px"
+                     },
+                    closeBoxMargin: "2px 2px 2px 2px",
+                    closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
+                    infoBoxClearance: new google.maps.Size(1, 1),
+                    isHidden: false,
+                    pane: "floatPane",
+                    enableEventPropagation: false
+                }
+                if (ib) ib.close();
+                ib = new InfoBox();
+                google.maps.event.addListener(marker, "click", function (e) {
+                    ib.setOptions(opt);
+                    ib.open(map, this);
+                });
+
+                
+                //ib.open(theMap, marker);
+
+                /*
+                var infowindow = new google.maps.InfoWindow({
+                    content: info
+                })
+
+                google.maps.event.addListener(marker, 'click', function(e) {
+                    infowindow.open(map, marker);
+                    console.log("K L I K K ");
+                })
+                */
+            }
 
 
             initialize();
@@ -145,7 +232,7 @@
                 {
                     stylers: [
                         { saturation: -100},
-                        { gamma: 0.50}
+                        { gamma: 1}
                     ]
                 },
                 {
@@ -161,6 +248,7 @@
               center: new google.maps.LatLng(59.91294, 10.75125),
               zoom: 6,
               disableDefaultUI: true,
+              scrollwheel: false,
               mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             map = new google.maps.Map(document.getElementById("map_canvas"),
@@ -168,6 +256,7 @@
             map.mapTypes.set("map_style", styledMap);
             map.setMapTypeId("map_style");
 
+            
 
           }
 
@@ -186,6 +275,10 @@
 
                -->
     <style>
+        #wrapper {
+            width: 920px;
+            margin: 0 auto;
+        }
 
         #inner {
             line-height: 200px;
@@ -202,12 +295,44 @@
             background-color: #cccccc;
         }
 
+        .konsern-blue {
+            background-color: #2566a8;
+        }
+
+        .konsern-blue-light {
+            background-color: #ccdfee;
+        }
+
+        .timber-green {
+            background-color: #23878d;
+        }
+
+        .timber-green-light {
+            background-color: #f1f7f7;
+        }
+
+        .wood-brown {
+            background-color: #7e7368;
+        }
+
+        .wood-brown-light {
+            background-color: #e0dfdb;
+        }
+
+        .bygg-red {
+            background-color: #a95c56;
+        }
+
+        .bygg-red-light {
+            background-color: #f6eced;
+        }
+
         .box {
             width: 150px;
             height: 40px;
             border-bottom: 1px solid #fff;
             border-right: 1px solid #fff;
-            background-color: #ebf3f7;
+            /*background-color: #ebf3f7;*/
             float: left;
             font-size: 11px;
             text-align: center;
@@ -218,14 +343,13 @@
             list-style: none;
         }
 
-        li a {
+        div a {
             text-decoration: none;
             font-size: 10px;
             color: #61979b;
-            
         }
 
-        li a.hover {
+        div a:hover {
            color: #01979b;
            text-decoration: underline; 
         }
@@ -236,21 +360,22 @@
     </style>
   </head>
   <body>
-    <div>Maps</div>
-     <div id="map" style="width: 920px;">
-        <div id="map-menu" style="width: 19%; float: left;">
-            
+    <div id="wrapper">
+        <div style="padding: 20px;">Maps</div>
+         <div id="map" style="width: 920px;">
+            <div id="map-menu" style="width: 160px; float: left;">
+                
+            </div>
+            <div id="map-content" style="float: left; width: 760px;">
+                
+            </div>
+            <div style="clear: both;"></div>
         </div>
-        <div id="map-content" style="float: left; border: 1px solid #333; width: 80%;">
-            
+        <div id="map_canvas" style="width:920px; height:500px"></div>
+        <div id="log">
+            <a href="http://gmaps-samples-v3.googlecode.com/svn/trunk/geocoder/getlatlng.html">http://gmaps-samples-v3.googlecode.com/svn/trunk/geocoder/getlatlng.html</a>
         </div>
-        <div style="clear: both;"></div>
-    </div>
-    <div id="map_canvas" style="width:920px; height:500px"></div>
-    <div id="log">
-        <a href="http://gmaps-samples-v3.googlecode.com/svn/trunk/geocoder/getlatlng.html">http://gmaps-samples-v3.googlecode.com/svn/trunk/geocoder/getlatlng.html</a>
-    </div>
-   
+    </div> <!-- end wrapper -->
     <!--<div id="timber" class="accordion-box">
         <div>Timber</div>
         <ul>
