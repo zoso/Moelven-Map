@@ -21,6 +21,11 @@
         var markerArr = [];
         var infoArr = [];
         $(document).ready(function() {
+            /*
+            - create a menu with 4 rows on the left
+            - create a container for the subsections
+            - onClick change content
+            */
             function getData(data, callback) {
                 $.ajax({
                     url: data,
@@ -112,9 +117,10 @@
                 });
                 $("#map-menu a").on("click", function(e) {
                     e.preventDefault();
+                    openAll($(this).data("id"));
                     viewSubMenu($(this).data("id"), function(res) {
                         $("#map-content a").on("click", function(e) {
-                            e.preventDefault();  
+                            e.preventDefault();
                             goto($(this).data("ref"));
                         })
                     })
@@ -125,14 +131,43 @@
                     goto($(this).data("ref"));
                 });    
             }
-            
-            /*
-            - create a menu with 4 rows on the left
-            - create a container for the subsections
-            - onClick change content
-        
-            */
 
+            //open all 
+            function openAll(id) {
+                console.log("open all > "+mapdata[id].data.length);
+                clearMarkers();
+                var img = {
+                    url: "img/arrow_"+mapdata[id].title.toLowerCase()+".png",
+                    size: new google.maps.Size(18, 32),
+                    orgin: new google.maps.Point(0,0),
+                    anchor: new google.maps.Point(9, 32)
+                }
+
+                for (var i = 0; i < mapdata[id].data.length; i++) {
+                    var m = new google.maps.Marker({
+                        position: new google.maps.LatLng(mapdata[id].data[i].lat, mapdata[id].data[i].lng),
+                        map: map,
+                        title: mapdata[id].data[i].name,
+                        icon: img,
+                        zIndex: 0
+                    })
+                    markerArr.push(m);
+                }
+            }
+
+            function clearMarkers() {
+                if (markerArr.length > 0) {
+                    console.log("----> remove markers > "+markerArr.length);
+                    for (var i = 0; i < markerArr.length; i++) {
+                        markerArr[i].setMap(null);
+                    }
+                }
+            }
+
+            function createMarker() {
+
+            }
+            
             function goto(d) {
                 var arr = d.split(",");
                 var dest = new google.maps.LatLng(mapdata[arr[0]].data[arr[1]].lat, mapdata[arr[0]].data[arr[1]].lng);
@@ -145,7 +180,7 @@
                     orgin: new google.maps.Point(0,0),
                     anchor: new google.maps.Point(9, 32)
                 }
-                marker = new google.maps.Marker({
+                var marker = new google.maps.Marker({
                       position: dest, 
                       map: map, 
                       title: t,
@@ -153,7 +188,7 @@
                       zIndex: 0
                 });
 
-                //maker check
+                //marker check
                 if (markerArr.length > 0) {
                     console.log("----> remove markers > "+markerArr.length);
                 }
@@ -190,73 +225,40 @@
                     ib.setOptions(opt);
                     ib.open(map, this);
                 });
-
-                
-                //ib.open(theMap, marker);
-
-                /*
-                var infowindow = new google.maps.InfoWindow({
-                    content: info
-                })
-
-                google.maps.event.addListener(marker, 'click', function(e) {
-                    infowindow.open(map, marker);
-                    console.log("K L I K K ");
-                })
-                */
             }
-
-
+            //create map
             initialize();
-        })
+        });
 
         function initialize() {
             var styles = [
-                {
-                    stylers: [
-                        { saturation: -100},
-                        { gamma: 1}
-                    ]
-                },
-                {
-                    featureType: 'all'
-                }
-                
-
-            ];
+                    {
+                        stylers: [
+                            { saturation: -100},
+                            { gamma: 1}
+                        ]
+                    },
+                    {
+                        featureType: 'all'
+                    }
+                ];
 
             var styledMap = new google.maps.StyledMapType(styles, {name: "Grayscaled"});
 
             var mapOptions = {
-              center: new google.maps.LatLng(59.91294, 10.75125),
-              zoom: 6,
-              disableDefaultUI: true,
-              scrollwheel: false,
-              mapTypeId: google.maps.MapTypeId.ROADMAP
+                center: new google.maps.LatLng(59.91294, 10.75125),
+                zoom: 6,
+                disableDefaultUI: true,
+                scrollwheel: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
             };
+
             map = new google.maps.Map(document.getElementById("map_canvas"),
                 mapOptions);
             map.mapTypes.set("map_style", styledMap);
             map.setMapTypeId("map_style");
-
-            
-
-          }
-
-        
-          
-        
-      
-
+        }
     </script>
-<!--
-                [ { "featureType": "water", "stylers": [ { "visibility": "simplified" } ] },{ "featureType": "landscape", "stylers": [ { "visibility": "off" } ] },{ "featureType": "administrative.country", "stylers": [ { "visibility": "off" } ] },{ "featureType": "landscape", "stylers": [ { "visibility": "simplified" }, { "saturation": 122 }, { "gamma": 9.99 } ] },{ "featureType": "landscape.natural", "stylers": [ { "visibility": "off" } ] },{ "featureType": "landscape.man_made", "stylers": [ { "visibility": "off" } ] },{ "featureType": "poi", "stylers": [ { "visibility": "off" } ] },{ "featureType": "road", "stylers": [ { "color": "#6d6153" } ] },{ "featureType": "landscape" },{ "featureType": "transit", "stylers": [ { "visibility": "off" } ] } ] */
-
-                /*
-
-                [ { "featureType": "water", "stylers": [ { "visibility": "simplified" } ] },{ "featureType": "landscape", "stylers": [ { "visibility": "off" } ] },{ "featureType": "administrative.country", "stylers": [ { "visibility": "off" } ] },{ "featureType": "landscape", "stylers": [ { "visibility": "simplified" }, { "saturation": 122 }, { "gamma": 9.99 } ] },{ "featureType": "landscape.natural", "stylers": [ { "visibility": "off" } ] },{ "featureType": "landscape.man_made", "stylers": [ { "visibility": "off" } ] },{ "featureType": "poi", "stylers": [ { "visibility": "off" } ] },{ "featureType": "road", "stylers": [ { "color": "#6d6153" }, { "visibility": "simplified" } ] },{ "featureType": "landscape" },{ "featureType": "transit", "stylers": [ { "visibility": "off" } ] },{ "featureType": "road.local", "stylers": [ { "visibility": "off" } ] },{ "featureType": "road.arterial", "stylers": [ { "visibility": "off" } ] } ]
-
-               -->
     <style>
         #wrapper {
             width: 920px;
@@ -354,10 +356,6 @@
             font-family: Verdana;
         }
 
-        ul {
-            list-style: none;
-        }
-
         div a {
             text-decoration: none;
             font-size: 10px;
@@ -365,12 +363,7 @@
         }
 
         div a:hover {
-           
             /*text-decoration: underline; */
-        }
-
-        ul li {
-            float: left;
         }
     </style>
   </head>
