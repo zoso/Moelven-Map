@@ -3,8 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>Moelven map</title>
-    
-    
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
       html { height: 100% }
@@ -23,13 +21,6 @@
         var markerArr = [];
         var infoArr = [];
         $(document).ready(function() {
-            $(".box a").on("click", function(e) {
-               e.preventDefault();
-               var arr = $(this).data("rel").split(",");
-               var dest = new google.maps.LatLng(arr[0], arr[1]);
-               goto(dest);
-            });
-
             function getData(data, callback) {
                 $.ajax({
                     url: data,
@@ -41,10 +32,6 @@
                         //console.log("error "+e);
                     }
                 });
-            };
-
-            function createMarker() {
-                
             };
 
             function getColor(str, type) {
@@ -93,7 +80,7 @@
                     submenu.children().each(function() {
                         $(this).animate({
                             opacity: 0
-                        }, 1000+(count+1), function() {
+                        }, 500+(count+1), function() {
                             count++;
                             if (count == submenu.children().length) {
                                 submenu.html('');
@@ -119,32 +106,24 @@
                 setup();
             });
 
-
-            
             function setup() {
-                console.log("setup");
-                viewSubMenu(1, function(res) {
+                viewSubMenu(0, function(res) {
                     console.log("> "+res);
                 });
                 $("#map-menu a").on("click", function(e) {
                     e.preventDefault();
-                    console.log("> "+$(this).data("id"));
                     viewSubMenu($(this).data("id"), function(res) {
                         $("#map-content a").on("click", function(e) {
-                            e.preventDefault();
-                           
+                            e.preventDefault();  
                             goto($(this).data("ref"));
-                            console.log(">> > "+$(this).data("ref"));
                         })
                     })
                 });
 
                 $("#map-content a").on("click", function(e) {
-                    e.preventDefault();
-                    console.log(">> > "+$(this).data("ref"));
-                    
+                    e.preventDefault(); 
                     goto($(this).data("ref"));
-                })    
+                });    
             }
             
             /*
@@ -173,12 +152,19 @@
                       icon: image,
                       zIndex: 0
                 });
+
+                //maker check
+                if (markerArr.length > 0) {
+                    console.log("----> remove markers > "+markerArr.length);
+                }
                 
+                markerArr.push(marker);
+
                 //infobox
                 var info =  "<div><span style='font-weight: bold;'>"+mapdata[arr[0]].data[arr[1]].name+"</span>";
                 info += "<br>"+ mapdata[arr[0]].data[arr[1]].address;
                 info += "<br>"+  mapdata[arr[0]].data[arr[1]].postalnr+"</div>";
-                
+                //var col = getColor(mapdata[arr[0]].name, "sub");
                 var opt = {
                     content: info,
                     disableAutoPan: false,
@@ -190,7 +176,7 @@
                         background: "#fff",
                         opacity: 0.9,
                         width: "280px"
-                     },
+                    },
                     closeBoxMargin: "2px 2px 2px 2px",
                     closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
                     infoBoxClearance: new google.maps.Size(1, 1),
