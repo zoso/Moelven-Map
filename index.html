@@ -70,6 +70,8 @@
                 }
 
                 if (type == "sub") c = c+"-light";
+                if (type == "light") c = c+"-light-text";
+                if (type == "color") c = c+"-text";
                 return c;
             }
 
@@ -81,8 +83,8 @@
                 for (var i in mapdata[id].data) {
                     var ref = id+","+i;
                     var str = '<div class="box '+getColor(mapdata[id].title, "sub")+'">';
-                        str += '<div style="line-height: 40px;">'
-                        str += '<a href="#" data-ref="'+ref+'">'+mapdata[id].data[i].name+'</a>';
+                        str += '<div style="line-height: 40px;">';
+                        str += '<a href="#" data-ref="'+ref+'"><span class="'+getColor(mapdata[id].title, "color")+'">'+mapdata[id].data[i].name+'</span></a>';
                         str += '</div></div>';
                     submenu.append(str);
                 }
@@ -117,7 +119,7 @@
                 mapdata = data;
                 //create menu
                 for (var i in data) {
-                    mapmenu.append('<div class="box '+getColor(data[i].title)+'"><div style="line-height: 40px;"><a href="#" data-id="'+i+'">'+data[i].title+'</a></div></div>');
+                    mapmenu.append('<div class="box '+getColor(data[i].title)+'"><div style="line-height: 40px;"><a href="#" data-id="'+i+'"><span class="'+getColor(data[i].title, "light")+'">'+data[i].title+'</span></a></div></div>');
                 }
                 setup();
             });
@@ -299,32 +301,64 @@
             background-color: #2566a8;
         }
 
+        .konsern-blue-text {
+            color: #2566a8;
+        }
+
         .konsern-blue-light {
             background-color: #ccdfee;
+        }
+
+        .konsern-blue-light-text {
+            color: #ccdfee;
         }
 
         .timber-green {
             background-color: #23878d;
         }
 
+        .timber-green-text {
+            color: #23878d;
+        }
+
         .timber-green-light {
             background-color: #f1f7f7;
+        }
+
+        .timber-green-light-text {
+            color: #f1f7f7;
         }
 
         .wood-brown {
             background-color: #7e7368;
         }
 
+        .wood-brown-text {
+            color: #7e7368;
+        }
+
         .wood-brown-light {
             background-color: #e0dfdb;
+        }
+
+        .wood-brown-light-text {
+            color: #e0dfdb;
         }
 
         .bygg-red {
             background-color: #a95c56;
         }
 
+        .bygg-red-text {
+            color: #a95c56;
+        }
+
         .bygg-red-light {
             background-color: #f6eced;
+        }
+
+        .bygg-red-light-text {
+            color: #f6eced;
         }
 
         .box {
@@ -346,12 +380,12 @@
         div a {
             text-decoration: none;
             font-size: 10px;
-            color: #61979b;
+           
         }
 
         div a:hover {
-           color: #01979b;
-           text-decoration: underline; 
+           
+            /*text-decoration: underline; */
         }
 
         ul li {
@@ -376,66 +410,5 @@
             <a href="http://gmaps-samples-v3.googlecode.com/svn/trunk/geocoder/getlatlng.html">http://gmaps-samples-v3.googlecode.com/svn/trunk/geocoder/getlatlng.html</a>
         </div>
     </div> <!-- end wrapper -->
-    <!--<div id="timber" class="accordion-box">
-        <div>Timber</div>
-        <ul>
-            <li class="box"><a href="#" data-rel="59.91294, 10.15125">Moelven Dalaträ AB</a></li>
-            <li class="box"><a href="#" data-rel="59.91294, 10.55125">Moelven Norsälven AB</a></li>
-            <li class="box"><a href="#" data-rel="59.21294, 10.24125">Moelven Mjøsbruket AS</a></li>
-            <li class="box"><a href="#" data-rel="59.91294, 10.15125">Moelven Årjäng Såg AB</a></li>
-            <li class="box"><a href="#" data-rel="56.91294, 10.33125">Moelven Valåsen AB</a></li>
-            <li class="box"><a href="#" data-rel="60.91294, 9.15125">Moelven Ransbysågen AB</a></li>
-            <li class="box"><a href="#" data-rel="60.759151, 9.14065">Moelven Component AB</a></li>
-            <li class="box"><a href="#" data-rel="59.91294, 10.15125">Moelven Profil AS</a></li>
-            <li class="box"><a href="#" data-rel="59.91294, 10.15125">Moelven Løten AS</a></li>
-            <li class="box"><a href="#" data-rel="59.91294, 10.15125">Moelven Telemarksbruket AS (51%)</a></li>
-            <li class="box"><a href="#" data-rel="59.91294, 10.15125">Moelven Numedal AS</a></li>
-            <li class="box"><a href="#" data-rel="59.91294, 10.15125">Moelven Notnäs AB</a></li>
-            <li class="box"><a href="#" data-rel="59.91294, 10.15125">Moelven Nössemark Trä AB</a></li>
-            <li class="box"><a href="#" data-rel="59.91294, 10.15125">Moelven Tom Heurlin AB</a></li>
-            <li class="box"><a href="#" data-rel="59.91294, 10.15125">UJ-Trading AB</a></li>
-        </ul>
-    </div>
-    <div id="wood" class="accordion-box">
-        <div>Wood</div>
-        <ul>
-            <li class="box"><a href="#">Moelven Wood AS<br>Moelven Wood AB<br>Moelven Danmark A/S</a></li>
-            <li class="box"><a href="#">Moelven Valåsen Wood AB</a></li>
-            <li class="box"><a href="#">Moelven Are AS</a></li>
-            <li class="box"><a href="#">Moelven Langmoen AS</a></li>
-            <li class="box"><a href="#">Moelven Edanesågen AB</a></li>
-            <li class="box"><a href="#">Moelven Eidsvold Værk AS</a></li>
-            <li class="box"><a href="#">Moelven Østerdalsbruket AS</a></li>
-            <li class="box"><a href="#">Moelven List AB</a></li>
-            <li class="box"><a href="#">Moelven Notnäs Wood AB</a></li>
-            <li class="box"><a href="#">Moelven Värmlands Trä AB</a></li>
-            <li class="box"><a href="#">Moelven Vänerply AB</a></li>
-            <li class="box"><a href="#">Moelven Wood Prosjekt AS</a></li>
-            <li class="box"><a href="#">Moelven Iso3 AS (84,5%)</a></li>
-            <li class="box"><a href="#">Moelven Sør-Tre AS</a></li>
-            <li class="box"><a href="#">Moelven Granvin Bruk AS (87,95%)</a></li>
-            <li class="box"><a href="#">Moelven Soknabruket AS</a></li>
-            <li class="box"><a href="#">Moelven Trysil AS</a></li>
-            <li class="box"><a href="#">Moelven Van Severen AS</a></li>
-            <li class="box"><a href="#">Moelven Treinteriør AS</a></li>
-            <li class="box"><a href="#">Moelven Eidsvoll AS</a></li>
-            <li class="box"><a href="#">Moelven Lovene AB</a></li>
-        </ul>
-    </div>
-    <div id="byggsystemer" class="accordion-box">
-        <div>Byggsystemer</div>
-        <ul>
-            <li class="box"><a href="#">Moelven ByggmModul AB</a></li>
-            <li class="box"><a href="#">Moelven Eurowand AB</a></li>
-            <li class="box"><a href="#">Moelven UK Ltd.</a></li>
-            <li class="box"><a href="#">Moelven Töreboda AB</a></li>
-            <li class="box"><a href="#">Moelven Elektro AB</a></li>
-            <li class="box"><a href="#">Moelven ByggModul AS</a></li>
-            <li class="box"><a href="#">Moelven Nordia AS</a></li>
-            <li class="box"><a href="#">Moelven Nordia Prosjekt AS</a></li>
-            <li class="box"><a href="#">Moelven Limtre AS</a></li>
-            <li class="box"><a href="#">Moelven Elektro AS</a></li>
-        </ul>
-    </div> -->
   </body>
 </html>
