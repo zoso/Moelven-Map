@@ -16,6 +16,7 @@
             height: 100% 
         }
     </style>
+    <link rel="stylesheet" href="css/style.css?v=2">
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSl7ioT2_AhBS-L-ZDIOjowKD2k7N1IVk&sensor=false">
     </script>
@@ -234,7 +235,7 @@
                 });
             }
             //create map
-            initialize();
+            //initialize();
         });
 
         function initialize() {
@@ -372,9 +373,26 @@
         div a:hover {
             /*text-decoration: underline; */
         }
+
+        
     </style>
   </head>
   <body>
+    <div>
+        <div class="btn">
+            <div class="left-btn konsern-bg"></div>
+            <div class="text-btn">Konsern</div>
+            <div class="right-btn konsern-bg">
+                
+            </div>
+        </div>
+        <div class="btn">
+            <div class="left-btn timber-bg"></div>
+            <div class="right-btn timber-bg">
+                <div class="text-btn">Konsern 2</div>
+            </div>
+        </div>
+    </div>
     <div id="wrapper">
         <div style="padding: 20px;">Maps</div>
          <div id="map" style="width: 920px;">
@@ -390,6 +408,7 @@
         <div id="log">
             <a href="http://gmaps-samples-v3.googlecode.com/svn/trunk/geocoder/getlatlng.html">http://gmaps-samples-v3.googlecode.com/svn/trunk/geocoder/getlatlng.html</a>
         </div>
+        
     </div> <!-- end wrapper -->
   </body>
 </html>

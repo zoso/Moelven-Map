@@ -1,0 +1,64 @@
+/*.gradientbg (@col1: #ccc, @col2: #333) {
+    background: @col1;
+    background: -moz-linear-gradient(top,  @col1 0%, @col2 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@col1), color-stop(100%,@col2));
+    background: -webkit-linear-gradient(top,  #@col1 0%,@col2 100%);
+    background: -o-linear-gradient(top,  @col1 0%,@col2 100%);
+    background: -ms-linear-gradient(top,  @col1 0%,@col2 100%);
+    background: linear-gradient(to bottom,  @col1 0%,@col2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@col1', endColorstr='#@col2',GradientType=0 );
+}*/
+/* http://3960.org/sandbox/button-mixins.php */
+.gradient (@origin: left, @start: #ffffff, @stop: #000000) {
+    background-color: @start;
+    background-image: -webkit-linear-gradient(@origin, @start, @stop);
+    background-image: -moz-linear-gradient(@origin, @start, @stop);
+    background-image: -o-linear-gradient(@origin, @start, @stop);
+    background-image: -ms-linear-gradient(@origin, @start, @stop);
+    background-image: linear-gradient(@origin, @start, @stop);
+}
+
+.btn {
+    width: 175px;
+    height: 59px;
+}
+
+.text-btn {
+    position: absolute;
+    left: 10px;
+    top: 59/2+"px";
+    color: #999;
+    float: left;
+}
+
+.left-btn {
+    position: relative;
+    width: 10px;
+    height: 59px;
+    background-color: #232;
+    float: left;
+}
+
+.right-btn {
+    position: relative;
+    float: left;
+    width: 165px;
+    height: 59px;
+    opacity: .3;
+    line-height: 59px;
+}
+
+.konsern-bg {
+    .gradient (top, #2768a9, #004c99);
+}
+
+.timber-bg {
+    .gradient (top, #00747b, #27898f);
+}
+
+.right-btn:hover {
+    opacity: 1;
+    color: #fff;
+}
+
+
