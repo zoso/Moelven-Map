@@ -1,13 +1,3 @@
-/*.gradientbg (@col1: #ccc, @col2: #333) {
-    background: @col1;
-    background: -moz-linear-gradient(top,  @col1 0%, @col2 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@col1), color-stop(100%,@col2));
-    background: -webkit-linear-gradient(top,  #@col1 0%,@col2 100%);
-    background: -o-linear-gradient(top,  @col1 0%,@col2 100%);
-    background: -ms-linear-gradient(top,  @col1 0%,@col2 100%);
-    background: linear-gradient(to bottom,  @col1 0%,@col2 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@col1', endColorstr='#@col2',GradientType=0 );
-}*/
 /* http://3960.org/sandbox/button-mixins.php */
 .gradient (@origin: left, @start: #ffffff, @stop: #000000) {
     background-color: @start;
@@ -18,17 +8,49 @@
     background-image: linear-gradient(@origin, @start, @stop);
 }
 
+@konsern-light: #2768a9;
+@konsert-light-10: #dae6f0;
+@konsern-dark: #004c99;
+@timber-light: #298a90;
+@timber-light-10: #e5f1f2;
+@timber-dark: #55a2a7;
+@wood-light: #6b5f51;
+@wood-light-10: #e9e7e5;
+@wood-dark: #9c948b;
+@bygg-light: #9d443e;
+@bygg-light-10: #f5eceb;
+@bygg-dark: #be827e;
+
+@brown-normal: #413223;
+@brown-selected: #e2dfdb;
+@brown-light: #f1f1ef;
+
+@btn-width: 174px;
+@btn-heigth: 59px;
+
+
+/* main stuff */
+#wrapper {
+    width: 920px;
+    margin: 0 auto;
+}
+
+/* main btn */
 .btn {
-    width: 175px;
-    height: 59px;
+    position: relative;
+    width: @btn-width;
+    height: @btn-heigth;
 }
 
 .text-btn {
     position: absolute;
-    left: 10px;
-    top: 59/2+"px";
-    color: #999;
+    top: @btn-heigth/2-10;
+    width: @btn-width;
     float: left;
+    font-size: 12px;
+    color: @brown-normal;
+    text-align: center;
+    z-index: 10;
 }
 
 .left-btn {
@@ -42,23 +64,37 @@
 .right-btn {
     position: relative;
     float: left;
-    width: 165px;
-    height: 59px;
-    opacity: .3;
-    line-height: 59px;
+    width: @btn-width - 10;
+    height: @btn-heigth;
+    line-height: @btn-heigth;
+    opacity: .1;
 }
 
 .konsern-bg {
-    .gradient (top, #2768a9, #004c99);
+    .gradient (top, @konsern-light, @konsern-dark);
 }
 
 .timber-bg {
-    .gradient (top, #00747b, #27898f);
+    .gradient (top, @timber-light, @timber-dark);
 }
 
-.right-btn:hover {
-    opacity: 1;
-    color: #fff;
+.wood-bg {
+    .gradient (top, @wood-light, @wood-dark);
+}
+
+.bygg-bg {
+    .gradient (top, @bygg-light, @bygg-dark);
+}
+
+.btn:hover {
+    
+    .right-btn {
+        opacity: 1;
+    }
+    .text-btn {
+        color: #fff;
+    }
+    
 }
 
 

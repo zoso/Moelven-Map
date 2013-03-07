@@ -8,13 +8,15 @@
         html { 
             height: 100% 
         }
+
         body { 
             height: 100%; margin: 0; padding: 0; font-family: Verdana; font-size: 11px; 
         }
-
+        
         #map_canvas { 
             height: 100% 
         }
+
     </style>
     <link rel="stylesheet" href="css/style.css?v=2">
     <script type="text/javascript"
@@ -22,385 +24,58 @@
     </script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="js/infobox.js"></script>
-    <script type="text/javascript">
-        var map;
-        var marker;
-        var ib;
-        var markerArr = [];
-        var infoArr = [];
-        $(document).ready(function() {
-            /*
-            - create a menu with 4 rows on the left
-            - create a container for the subsections
-            - onClick change content
-            */
-            function getData(data, callback) {
-                $.ajax({
-                    url: data,
-                    dataType: 'json',
-                    success: function(js) {
-                        callback(js);
-                    },
-                    error: function(j, e) {
-                        //console.log("error "+e);
-                    }
-                });
-            };
-
-            function getColor(str, type) {
-                var c = "";
-                switch(str.toLowerCase()) {
-                    case "konsern":
-                        c = "konsern-blue";
-                        break;
-                    case "timber":
-                        c = "timber-green";
-                        break;
-                    case "wood":
-                        c = "wood-brown";    
-                        break;
-                    case "byggsystemer":
-                        c = "bygg-red";
-                        break;
-
-                }
-                if (type == "sub") c = c+"-light";
-                if (type == "light") c = c+"-light-text";
-                if (type == "color") c = c+"-text";
-                return c;
-            }
-
-            function randomNumber(min, max) {
-                return Math.floor(Math.random() * (max - min + 1)) + min;
-            }
-
-            function drawSubMenu(id, callback) {
-                for (var i in mapdata[id].data) {
-                    var ref = id+","+i;
-                    var str = '<div class="box '+getColor(mapdata[id].title, "sub")+'">';
-                        str += '<div style="line-height: 40px;">';
-                        str += '<a href="#" data-ref="'+ref+'"><span class="'+getColor(mapdata[id].title, "color")+'">'+mapdata[id].data[i].name+'</span></a>';
-                        str += '</div></div>';
-                    submenu.append(str);
-                }
-                callback("drawing the submenu");
-            }
-
-            function viewSubMenu(id, callback) {
-                console.log("children "+submenu.children().length);
-                var count = 0;
-                if (submenu.children().length > 0) {
-                    submenu.children().each(function() {
-                        $(this).animate({
-                            opacity: 0
-                        }, 500+(count+1), function() {
-                            count++;
-                            if (count == submenu.children().length) {
-                                submenu.html('');
-                                drawSubMenu(id, callback);
-                            }
-                        });
-                    })
-                } else {
-                    drawSubMenu(id, callback);
-                }
-            }
-
-            var mapdata = [];
-            var mapmenu = $("#map-menu");
-            var submenu = $("#map-content");
-
-            getData("data.js", function(data) {
-                mapdata = data;
-                //create menu
-                for (var i in data) {
-                    mapmenu.append('<div class="box '+getColor(data[i].title)+'"><div style="line-height: 40px;"><a href="#" data-id="'+i+'"><span class="'+getColor(data[i].title, "light")+'">'+data[i].title+'</span></a></div></div>');
-                }
-                setup();
-            });
-
-            function setup() {
-                viewSubMenu(0, function(res) {
-                    console.log("> "+res);
-                });
-                $("#map-menu a").on("click", function(e) {
-                    e.preventDefault();
-                    openAll($(this).data("id"));
-                    viewSubMenu($(this).data("id"), function(res) {
-                        $("#map-content a").on("click", function(e) {
-                            e.preventDefault();
-                            goto($(this).data("ref"));
-                        })
-                    })
-                });
-
-                $("#map-content a").on("click", function(e) {
-                    e.preventDefault(); 
-                    goto($(this).data("ref"));
-                });    
-            }
-
-            //open all 
-            function openAll(id) {
-                console.log("open all > "+mapdata[id].data.length);
-                clearMarkers();
-                var img = {
-                    url: "img/arrow_"+mapdata[id].title.toLowerCase()+".png",
-                    size: new google.maps.Size(18, 32),
-                    orgin: new google.maps.Point(0,0),
-                    anchor: new google.maps.Point(9, 32)
-                }
-
-                for (var i = 0; i < mapdata[id].data.length; i++) {
-                    var m = new google.maps.Marker({
-                        position: new google.maps.LatLng(mapdata[id].data[i].lat, mapdata[id].data[i].lng),
-                        map: map,
-                        title: mapdata[id].data[i].name,
-                        icon: img,
-                        zIndex: 0
-                    })
-                    markerArr.push(m);
-                }
-            }
-
-            function clearMarkers() {
-                if (markerArr.length > 0) {
-                    console.log("----> remove markers > "+markerArr.length);
-                    for (var i = 0; i < markerArr.length; i++) {
-                        markerArr[i].setMap(null);
-                    }
-                }
-            }
-
-            function createMarker() {
-
-            }
-            
-            function goto(d) {
-                var arr = d.split(",");
-                var dest = new google.maps.LatLng(mapdata[arr[0]].data[arr[1]].lat, mapdata[arr[0]].data[arr[1]].lng);
-                map.setCenter(dest);
-                var t = " > "+ mapdata[arr[0]].data[arr[1]].name;
-                //18x32
-                var image = {
-                    url: "img/arrow_"+mapdata[arr[0]].title.toLowerCase()+".png",
-                    size: new google.maps.Size(18, 32),
-                    orgin: new google.maps.Point(0,0),
-                    anchor: new google.maps.Point(9, 32)
-                }
-                var marker = new google.maps.Marker({
-                      position: dest, 
-                      map: map, 
-                      title: t,
-                      icon: image,
-                      zIndex: 0
-                });
-
-                //marker check
-                if (markerArr.length > 0) {
-                    console.log("----> remove markers > "+markerArr.length);
-                }
-                
-                markerArr.push(marker);
-
-                //infobox
-                var info =  "<div><span style='font-weight: bold;'>"+mapdata[arr[0]].data[arr[1]].name+"</span>";
-                info += "<br>"+ mapdata[arr[0]].data[arr[1]].address;
-                info += "<br>"+  mapdata[arr[0]].data[arr[1]].postalnr+"</div>";
-                //var col = getColor(mapdata[arr[0]].name, "sub");
-                var opt = {
-                    content: info,
-                    disableAutoPan: false,
-                    maxWidth: 0,
-                    pixelOffset: new google.maps.Size(-140, -100),
-                    zIndex: null,
-                    boxStyle: {
-                        padding: "5px",
-                        background: "#fff",
-                        opacity: 0.9,
-                        width: "280px"
-                    },
-                    closeBoxMargin: "2px 2px 2px 2px",
-                    closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
-                    infoBoxClearance: new google.maps.Size(1, 1),
-                    isHidden: false,
-                    pane: "floatPane",
-                    enableEventPropagation: false
-                }
-                if (ib) ib.close();
-                ib = new InfoBox();
-                google.maps.event.addListener(marker, "click", function (e) {
-                    ib.setOptions(opt);
-                    ib.open(map, this);
-                });
-            }
-            //create map
-            //initialize();
-        });
-
-        function initialize() {
-            var styles = [
-                    {
-                        stylers: [
-                            { saturation: -100},
-                            { gamma: 1}
-                        ]
-                    },
-                    {
-                        featureType: 'all'
-                    }
-                ];
-
-            var styledMap = new google.maps.StyledMapType(styles, {name: "Grayscaled"});
-
-            var mapOptions = {
-                center: new google.maps.LatLng(59.91294, 10.75125),
-                zoom: 6,
-                disableDefaultUI: true,
-                scrollwheel: false,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-
-            map = new google.maps.Map(document.getElementById("map_canvas"),
-                mapOptions);
-            map.mapTypes.set("map_style", styledMap);
-            map.setMapTypeId("map_style");
-        }
-    </script>
-    <style>
-        #wrapper {
-            width: 920px;
-            margin: 0 auto;
-        }
-
-        #inner {
-            line-height: 200px;
-        }
-
-        #outer {
-            border: 1px solid blue;
-            float: left;
-            padding: 0 1em;
-        }
-        .accordion-box {
-            width: 890px;
-            float: left;
-            background-color: #cccccc;
-        }
-
-        .konsern-blue {
-            background-color: #2566a8;
-        }
-
-        .konsern-blue-text {
-            color: #2566a8;
-        }
-
-        .konsern-blue-light {
-            background-color: #ccdfee;
-        }
-
-        .konsern-blue-light-text {
-            color: #ccdfee;
-        }
-
-        .timber-green {
-            background-color: #23878d;
-        }
-
-        .timber-green-text {
-            color: #23878d;
-        }
-
-        .timber-green-light {
-            background-color: #f1f7f7;
-        }
-
-        .timber-green-light-text {
-            color: #f1f7f7;
-        }
-
-        .wood-brown {
-            background-color: #7e7368;
-        }
-
-        .wood-brown-text {
-            color: #7e7368;
-        }
-
-        .wood-brown-light {
-            background-color: #e0dfdb;
-        }
-
-        .wood-brown-light-text {
-            color: #e0dfdb;
-        }
-
-        .bygg-red {
-            background-color: #a95c56;
-        }
-
-        .bygg-red-text {
-            color: #a95c56;
-        }
-
-        .bygg-red-light {
-            background-color: #f6eced;
-        }
-
-        .bygg-red-light-text {
-            color: #f6eced;
-        }
-
-        .box {
-            width: 150px;
-            height: 40px;
-            border-bottom: 1px solid #fff;
-            border-right: 1px solid #fff;
-            /*background-color: #ebf3f7;*/
-            float: left;
-            font-size: 11px;
-            text-align: center;
-            font-family: Verdana;
-        }
-
-        div a {
-            text-decoration: none;
-            font-size: 10px;
-           
-        }
-
-        div a:hover {
-            /*text-decoration: underline; */
-        }
-
-        
-    </style>
+    <script src="js/jquery.moelven.map.js"></script>
   </head>
   <body>
-    <div>
-        <div class="btn">
-            <div class="left-btn konsern-bg"></div>
-            <div class="text-btn">Konsern</div>
-            <div class="right-btn konsern-bg">
-                
-            </div>
-        </div>
-        <div class="btn">
-            <div class="left-btn timber-bg"></div>
-            <div class="right-btn timber-bg">
-                <div class="text-btn">Konsern 2</div>
-            </div>
-        </div>
-    </div>
     <div id="wrapper">
-        <div style="padding: 20px;">Maps</div>
-         <div id="map" style="width: 920px;">
-            <div id="map-menu" style="width: 160px; float: left;">
-                
+        <div style="height: 100px; background-color: #ccc;">
+            <p>Test av map</p>
+            <div id="log"></div>
+        </div>
+
+        <!-- <div style="position: absolute; left: 10px; background-color: #222;">
+            <div style="position: relative; left: -50%; border: dotted red 1px;">
+                I am some centered shrink-to-fit content! <br />
+                tum te tum
             </div>
-            <div id="map-content" style="float: left; width: 760px;">
-                
+        </div> -->
+        
+        
+
+        
+        <div id="map" style="width: 920px;">
+            <div id="map-menu" style="width: 175px; float: left;"> 
+                <div class="btn">
+                    <a href="#" data-id="konsern">
+                        <div class="left-btn konsern-bg"></div>
+                        <div class="text-btn">Konsern</div>
+                        <div class="right-btn konsern-bg"></div>
+                    </a>
+                </div>
+                <div class="btn">
+                    <a href="#" data-id="timber">
+                        <div class="left-btn timber-bg"></div>
+                        <div class="text-btn">Timber</div>
+                        <div class="right-btn timber-bg"></div>
+                    </a>
+                </div>
+                <div class="btn">
+                    <a href="#" data-id="wood">
+                        <div class="left-btn wood-bg"></div>
+                        <div class="text-btn">Wood</div>
+                        <div class="right-btn wood-bg"></div>
+                    </a>
+                </div>
+                <div class="btn">
+                    <a href="#" data-id="bygg">
+                        <div class="left-btn bygg-bg"></div>
+                        <div class="text-btn">Byggsystemer</div>
+                        <div class="right-btn bygg-bg"></div>
+                    </a>
+                </div>
+            </div>
+            <div id="map-content" style="float: left; width: 745px;">
+                helo
             </div>
             <div style="clear: both;"></div>
         </div>
