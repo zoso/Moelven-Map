@@ -10,9 +10,9 @@ $(document).ready(function() {
     - create a container for the subsections
     - onClick change content
     */
-
     $mainmenu = $("#main-menu");
-
+    var mapmenu = $("#map-menu");
+    var submenu = $("#map-content");
 
     function getData(data, callback) {
         $.ajax({
@@ -22,7 +22,7 @@ $(document).ready(function() {
                 callback(js);
             },
             error: function(j, e) {
-                //console.log("error "+e);
+                
             }
         });
     };
@@ -34,21 +34,59 @@ $(document).ready(function() {
         $(".btn a").each(function() {
             $(this).attr('data-nr', i);
             i = i+1;
-            $("#log").append($(this).data("nr"));
         })
-        //setup();
+        setup();
     });
+
+    function setup() {
+        viewSubMenu(0, function(res) {
+           log(res);
+        });
+        $("#map-menu a").on("click", function(e) {
+            e.preventDefault();
+            openAll($(this).data("id"));
+            viewSubMenu($(this).data("id"), function(res) {
+                $("#map-content a").on("click", function(e) {
+                    e.preventDefault();
+                    goto($(this).data("ref"));
+                })
+            })
+        });
+
+        $("#map-content a").on("click", function(e) {
+            e.preventDefault(); 
+            goto($(this).data("ref"));
+        });    
+    }
+
+    function viewSubMenu(id, callback) {
+        log("children "+submenu.children().length);
+        var count = 0;
+        if (submenu.children().length > 0) {
+            submenu.children().each(function() {
+                $(this).animate({
+                    opacity: 0
+                }, 500+(count+1), function() {
+                    count++;
+                    if (count == submenu.children().length) {
+                        submenu.html('');
+                        drawSubMenu(id, callback);
+                    }
+                });
+            })
+        } else {
+            drawSubMenu(id, callback);
+        }
+    }
 
     /* new Buttons */
     $(".btn a").on("click", function(e) {
-        $("#log").html("> "+$(this).data("nr"));
+        //$("#log").html("> "+$(this).data("nr"));
+        drawSubMenu($(this).data("nr"));
     })
 
-    function setActive(id) {
-        //test
 
-    }
-
+    //less
     function getColor(str, type) {
         var c = "";
         switch(str.toLowerCase()) {
@@ -77,63 +115,29 @@ $(document).ready(function() {
     }
 
     function drawSubMenu(id, callback) {
+        if (submenu.children().length > 0) {
+            submenu.html('');
+        }
         for (var i in mapdata[id].data) {
             var ref = id+","+i;
-            var str = '<div class="box '+getColor(mapdata[id].title, "sub")+'">';
-                str += '<div style="line-height: 40px;">';
-                str += '<a href="#" data-ref="'+ref+'"><span class="'+getColor(mapdata[id].title, "color")+'">'+mapdata[id].data[i].name+'</span></a>';
-                str += '</div></div>';
+            var str = '<a href="#" data-ref="'+ref+'"><div class="btn-box sub">';
+                //str += '<div style="line-height: 40px;">';
+                var len = mapdata[id].data[i].name.length;
+                if (len > 28 && len < 40 ) {
+                    str += '<span style="line-height: 28px; background-color: #ccc">'+mapdata[id].data[i].name+'</span>';
+                    log("> "+mapdata[id].data[i].name+": "+mapdata[id].data[i].name.length);
+                } else if (len > 40) {
+                    str += '<span style="line-height: 18px; background-color: #ededed">'+mapdata[id].data[i].name+'</span>';  
+                } else { 
+                    str += '<span style="line-height: 59px;">'+mapdata[id].data[i].name+'</span>';
+                }
+                
+                str += '</div></a>';//</div>';
             submenu.append(str);
         }
         callback("drawing the submenu");
     }
-
-    function viewSubMenu(id, callback) {
-        console.log("children "+submenu.children().length);
-        var count = 0;
-        if (submenu.children().length > 0) {
-            submenu.children().each(function() {
-                $(this).animate({
-                    opacity: 0
-                }, 500+(count+1), function() {
-                    count++;
-                    if (count == submenu.children().length) {
-                        submenu.html('');
-                        drawSubMenu(id, callback);
-                    }
-                });
-            })
-        } else {
-            drawSubMenu(id, callback);
-        }
-    }
-
     
-    var mapmenu = $("#map-menu");
-    var submenu = $("#map-content");
-
-    
-
-    function setup() {
-        viewSubMenu(0, function(res) {
-            console.log("> "+res);
-        });
-        $("#map-menu a").on("click", function(e) {
-            e.preventDefault();
-            openAll($(this).data("id"));
-            viewSubMenu($(this).data("id"), function(res) {
-                $("#map-content a").on("click", function(e) {
-                    e.preventDefault();
-                    goto($(this).data("ref"));
-                })
-            })
-        });
-
-        $("#map-content a").on("click", function(e) {
-            e.preventDefault(); 
-            goto($(this).data("ref"));
-        });    
-    }
 
     //open all 
     function openAll(id) {
@@ -165,10 +169,6 @@ $(document).ready(function() {
                 markerArr[i].setMap(null);
             }
         }
-    }
-
-    function createMarker() {
-
     }
     
     function goto(d) {
@@ -230,7 +230,7 @@ $(document).ready(function() {
         });
     }
     //create map
-    //initialize();
+    initialize();
 }); //end jquery
 
 function initialize() {
@@ -238,7 +238,7 @@ function initialize() {
             {
                 stylers: [
                     { saturation: -100},
-                    { gamma: 1}
+                    { gamma: 2}
                 ]
             },
             {
@@ -260,4 +260,12 @@ function initialize() {
         mapOptions);
     map.mapTypes.set("map_style", styledMap);
     map.setMapTypeId("map_style");
+}
+
+function log(str, type) {
+    if (type) {
+        $("#log").html("> "+str);
+    } else {
+        $("#log").append("> "+str+"<br>");
+    }
 }

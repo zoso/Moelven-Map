@@ -35,6 +35,12 @@
     margin: 0 auto;
 }
 
+#log {
+    width: 300px;
+    position: absolute;
+
+}
+
 /* main btn */
 .btn {
     position: relative;
@@ -87,14 +93,32 @@
 }
 
 .btn:hover {
-    
     .right-btn {
         opacity: 1;
     }
     .text-btn {
         color: #fff;
-    }
-    
+    }   
 }
+
+.btn-box {
+    position: relative;
+    font-size: 10px;
+    width: @btn-width - 4;
+    height: @btn-heigth - 4;
+    margin-left: 2px;
+    margin-bottom: 2px;
+    border: 1px solid @brown-light;
+    //line-height: @btn-heigth/2;
+    text-align: center;
+    //background-color: @brown-light;
+}
+
+.btn-box:hover {
+    border: 1px solid @brown-selected;
+    //background-color: @brown-selected;
+}
+
+
 
 
