@@ -3,6 +3,7 @@ var marker;
 var ib;
 var markerArr = [];
 var infoArr = [];
+var mapdata = [];
 $(document).ready(function() {
     /*
     - create a menu with 4 rows on the left
@@ -107,7 +108,7 @@ $(document).ready(function() {
         }
     }
 
-    var mapdata = [];
+    
     var mapmenu = $("#map-menu");
     var submenu = $("#map-content");
 
