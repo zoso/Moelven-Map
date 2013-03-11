@@ -24,7 +24,8 @@
     </script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="js/infobox.js"></script>
-    <script src="js/jquery.moelven.map.js"></script>
+    <!-- <script src="js/jquery.moelven.map.js"></script> -->
+    <script src="js/jquery.map.moelven.js?v=3"></script>
   </head>
   <body>
     <div id="log"></div>
@@ -40,7 +41,7 @@
             </div>
         </div> -->
         
-        <div id="map" style="width: 920px;">
+        <div id="map" style="width: 890px;">
             <div id="map-menu" style="width: 175px; float: left;"> 
                 <div class="btn">
                     <a href="#" data-id="konsern">
@@ -71,16 +72,84 @@
                     </a>
                 </div>
             </div>
-            <div id="map-content" style="float: left; width: 745px;">
+            <div id="map-content" style="float: left; width: 715px;">
             
             </div>
             <div style="clear: both;"></div>
         </div>
-        <div id="map_canvas" style="width:920px; height:500px"></div>
-        <div id="log">
+        <!-- map div -->
+        <div id="map_canvas" style="width:890px; height:500px"></div>
+        <div>
             <a href="http://gmaps-samples-v3.googlecode.com/svn/trunk/geocoder/getlatlng.html">http://gmaps-samples-v3.googlecode.com/svn/trunk/geocoder/getlatlng.html</a>
         </div>
         
     </div> <!-- end wrapper -->
   </body>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        //init maps
+        var map;
+        function initialize() {
+            var styles = [
+                    {
+                        stylers: [
+                            { saturation: -100},
+                            { gamma: 2}
+                        ]
+                    },
+                    {
+                        featureType: 'all'
+                    }
+                ];
+            var styledMap = new google.maps.StyledMapType(styles, {name: "Grayscaled"});
+            var mapOptions = {
+                center: new google.maps.LatLng(59.91294, 10.75125),
+                zoom: 5,
+                disableDefaultUI: true,
+                scrollwheel: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            map = new google.maps.Map(document.getElementById("map_canvas"),
+                mapOptions);
+            map.mapTypes.set("map_style", styledMap);
+            map.setMapTypeId("map_style");
+        };
+        initialize();
+        //get data
+        function getData(data, callback) {
+            $.ajax({
+                url: data,
+                dataType: 'json',
+                success: function(js) {
+                    callback(js);
+                },
+                error: function(j, e) {
+                    //error loading data
+                }
+            });
+        };
+
+        //init 
+        getData("data.js", function(data) {
+            //set data-nr in menu
+            var i = 0;
+            $("#map-menu .btn a").each(function() {
+                $(this).attr('data-nr', i);
+                i = i+1;
+            });
+            //setup plugin
+            $(this).MoelvenMap(this, {
+                log: "#log",
+                menu: "#map-menu",
+                map: map,
+                sub: "#map-content",
+                mapdata: data,
+                openall: false,
+                imgurl: "img/"
+            });
+        });
+
+    })
+  </script>
 </html>

@@ -7,32 +7,32 @@
 				"address" : "",
 				"postalnr" : "",
 				"phone": "",
-				"lat" : "69.66528588622045",
-				"lng" : "18.990542849999997"
+				"lat" : "59.66528588622045",
+				"lng" : "12.990542849999997"
 			},
 			{
 				"name": "Konsern 2",
 				"address" : "",
 				"postalnr" : "",
 				"phone": "",
-				"lat" : "",
-				"lng" : ""
+				"lat" : "58.66528588622045",
+				"lng" : "16.990542849999997"
 			},
 			{
 				"name": "Konsern 3",
 				"address" : "",
 				"postalnr" : "",
 				"phone": "",
-				"lat" : "",
-				"lng" : ""
+				"lat" : "60.66528588622045",
+				"lng" : "10.990542849999997"
 			},
 			{
 				"name": "Konsern 4",
 				"address" : "",
 				"postalnr" : "",
 				"phone": "",
-				"lat" : "",
-				"lng" : ""
+				"lat" : "59.66528588622045",
+				"lng" : "9.990542849999997"
 			}
 		]
 	},
@@ -48,11 +48,11 @@
 				"lng": 14.971547299999997
 			},
 			{
-				"name": "Moelven Norsälven AB",
+				"name": "Moelven Norsälven A0B",
 				"address": "Norsälvsvägen 11",
 				"postalnr": "SE-660 50 Vålberg",
 				"lat": 59.397572326849534,
-				"lng": 113.219351200000006
+				"lng": 13.219351200000006
 			},
 			{
 				"name": "Moelven Mjøsbruket AS",

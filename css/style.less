@@ -25,13 +25,15 @@
 @brown-selected: #e2dfdb;
 @brown-light: #f1f1ef;
 
-@btn-width: 174px;
+@btn-width: 175px;
 @btn-heigth: 59px;
+
+@margin: 5px;
 
 
 /* main stuff */
 #wrapper {
-    width: 920px;
+    width: 890px;
     margin: 0 auto;
 }
 
@@ -46,6 +48,7 @@
     position: relative;
     width: @btn-width;
     height: @btn-heigth;
+    margin-bottom: @margin;
 }
 
 .text-btn {
@@ -101,24 +104,47 @@
     }   
 }
 
+.btn-active {
+    .right-btn {
+        opacity: 1;
+    }
+    .text-btn {
+        color: #fff;
+    }   
+}
+
 .btn-box {
     position: relative;
     font-size: 10px;
     width: @btn-width - 4;
-    height: @btn-heigth - 4;
-    margin-left: 2px;
-    margin-bottom: 2px;
+    height: @btn-heigth - 2;
+    margin-left: @margin;
+    margin-bottom: @margin;
     border: 1px solid @brown-light;
     //line-height: @btn-heigth/2;
     text-align: center;
+    float: left;
+    color: @brown-normal;
+    //background-color: #fff;
     //background-color: @brown-light;
+}
+
+.btn-box-active {
+    background-color: @brown-selected;
 }
 
 .btn-box:hover {
     border: 1px solid @brown-selected;
-    //background-color: @brown-selected;
 }
 
+#map-content a {
+    text-decoration: none;
+    color: @brown-normal;
+}
+
+.infobox {
+    color: @brown-normal;
+}
 
 
 

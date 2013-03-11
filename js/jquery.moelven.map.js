@@ -10,10 +10,11 @@ $(document).ready(function() {
     - create a container for the subsections
     - onClick change content
     */
-    $mainmenu = $("#main-menu");
+    var mainmenu = $("#main-menu");
     var mapmenu = $("#map-menu");
     var submenu = $("#map-content");
 
+    // get data 
     function getData(data, callback) {
         $.ajax({
             url: data,
@@ -22,14 +23,16 @@ $(document).ready(function() {
                 callback(js);
             },
             error: function(j, e) {
-                
+                //error loading data
             }
         });
     };
 
+    //init 
     getData("data.js", function(data) {
+        //set mapdata
         mapdata = data;
-        //set nr in menu
+        //set data-nr in menu
         var i = 0;
         $(".btn a").each(function() {
             $(this).attr('data-nr', i);
@@ -38,80 +41,45 @@ $(document).ready(function() {
         setup();
     });
 
+    //setup
     function setup() {
         viewSubMenu(0, function(res) {
-           log(res);
-        });
-        $("#map-menu a").on("click", function(e) {
-            e.preventDefault();
-            openAll($(this).data("id"));
-            viewSubMenu($(this).data("id"), function(res) {
-                $("#map-content a").on("click", function(e) {
-                    e.preventDefault();
-                    goto($(this).data("ref"));
-                })
-            })
-        });
+           //sub menu created
 
+        });
+        // $("#map-menu a").on("click", function(e) {
+        //     e.preventDefault();
+        //     log("click")
+        //     //openAll($(this).data("id"));
+        //     viewSubMenu($(this).data("id"), function(res) {
+        //         $("#map-content a").on("click", function(e) {
+        //             e.preventDefault();
+        //             //goto($(this).data("ref"));
+        //         })
+        //     })
+        // });   
+    }
+
+    function activateSubmenu() {
         $("#map-content a").on("click", function(e) {
             e.preventDefault(); 
+            log($(this).data("ref"));
             goto($(this).data("ref"));
-        });    
+        }); 
     }
 
-    function viewSubMenu(id, callback) {
-        log("children "+submenu.children().length);
-        var count = 0;
-        if (submenu.children().length > 0) {
-            submenu.children().each(function() {
-                $(this).animate({
-                    opacity: 0
-                }, 500+(count+1), function() {
-                    count++;
-                    if (count == submenu.children().length) {
-                        submenu.html('');
-                        drawSubMenu(id, callback);
-                    }
-                });
-            })
-        } else {
-            drawSubMenu(id, callback);
-        }
-    }
-
-    /* new Buttons */
+    /* new menu Buttons */
     $(".btn a").on("click", function(e) {
-        //$("#log").html("> "+$(this).data("nr"));
+        log("> "+$(this).data("nr"));
         drawSubMenu($(this).data("nr"));
     })
 
-
-    //less
-    function getColor(str, type) {
-        var c = "";
-        switch(str.toLowerCase()) {
-            case "konsern":
-                c = "konsern-blue";
-                break;
-            case "timber":
-                c = "timber-green";
-                break;
-            case "wood":
-                c = "wood-brown";    
-                break;
-            case "byggsystemer":
-                c = "bygg-red";
-                break;
-
-        }
-        if (type == "sub") c = c+"-light";
-        if (type == "light") c = c+"-light-text";
-        if (type == "color") c = c+"-text";
-        return c;
-    }
-
-    function randomNumber(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
+    function viewSubMenu(id, callback) {
+        log("children "+submenu.children().length);
+        drawSubMenu(id, function() {
+            log("submenu loaded");
+            
+        })
     }
 
     function drawSubMenu(id, callback) {
@@ -124,24 +92,50 @@ $(document).ready(function() {
                 //str += '<div style="line-height: 40px;">';
                 var len = mapdata[id].data[i].name.length;
                 if (len > 28 && len < 40 ) {
-                    str += '<span style="line-height: 28px; background-color: #ccc">'+mapdata[id].data[i].name+'</span>';
-                    log("> "+mapdata[id].data[i].name+": "+mapdata[id].data[i].name.length);
+                    str += '<span style="line-height: 28px;">'+mapdata[id].data[i].name+'</span>';
                 } else if (len > 40) {
-                    str += '<span style="line-height: 18px; background-color: #ededed">'+mapdata[id].data[i].name+'</span>';  
+                    str += '<span style="line-height: 18px;">'+mapdata[id].data[i].name+'</span>';  
                 } else { 
-                    str += '<span style="line-height: 59px;">'+mapdata[id].data[i].name+'</span>';
+                    str += '<span style="line-height: 58px;">'+mapdata[id].data[i].name+'</span>';
                 }
                 
-                str += '</div></a>';//</div>';
+                str += '</div></a>';
             submenu.append(str);
         }
+        activateSubmenu();
         callback("drawing the submenu");
     }
-    
+    //less
+    // function getColor(str, type) {
+    //     var c = "";
+    //     switch(str.toLowerCase()) {
+    //         case "konsern":
+    //             c = "konsern-blue";
+    //             break;
+    //         case "timber":
+    //             c = "timber-green";
+    //             break;
+    //         case "wood":
+    //             c = "wood-brown";    
+    //             break;
+    //         case "byggsystemer":
+    //             c = "bygg-red";
+    //             break;
+
+    //     }
+    //     if (type == "sub") c = c+"-light";
+    //     if (type == "light") c = c+"-light-text";
+    //     if (type == "color") c = c+"-text";
+    //     return c;
+    // }
+
+    // function randomNumber(min, max) {
+    //     return Math.floor(Math.random() * (max - min + 1)) + min;
+    // }
 
     //open all 
     function openAll(id) {
-        console.log("open all > "+mapdata[id].data.length);
+        log("open all > "+mapdata[id].data.length);
         clearMarkers();
         var img = {
             url: "img/arrow_"+mapdata[id].title.toLowerCase()+".png",
@@ -169,9 +163,11 @@ $(document).ready(function() {
                 markerArr[i].setMap(null);
             }
         }
+        markerArr = [];
     }
     
     function goto(d) {
+        clearMarkers();
         var arr = d.split(",");
         var dest = new google.maps.LatLng(mapdata[arr[0]].data[arr[1]].lat, mapdata[arr[0]].data[arr[1]].lng);
         map.setCenter(dest);
@@ -193,13 +189,13 @@ $(document).ready(function() {
 
         //marker check
         if (markerArr.length > 0) {
-            console.log("----> remove markers > "+markerArr.length);
+            log("----> remove markers > "+markerArr.length);
         }
         
         markerArr.push(marker);
-
+        if (ib) ib.close();
         //infobox
-        var info =  "<div><span style='font-weight: bold;'>"+mapdata[arr[0]].data[arr[1]].name+"</span>";
+        var info =  "<div class='info'><span style='font-weight: bold;'>"+mapdata[arr[0]].data[arr[1]].name+"</span>";
         info += "<br>"+ mapdata[arr[0]].data[arr[1]].address;
         info += "<br>"+  mapdata[arr[0]].data[arr[1]].postalnr+"</div>";
         //var col = getColor(mapdata[arr[0]].name, "sub");
@@ -222,8 +218,11 @@ $(document).ready(function() {
             pane: "floatPane",
             enableEventPropagation: false
         }
-        if (ib) ib.close();
+        
         ib = new InfoBox();
+        //open info 
+        ib.setOptions(opt);
+        ib.open(map, marker);
         google.maps.event.addListener(marker, "click", function (e) {
             ib.setOptions(opt);
             ib.open(map, this);
