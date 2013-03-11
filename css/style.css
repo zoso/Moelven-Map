@@ -1,5 +1,5 @@
 #wrapper{width:890px;margin:0 auto;}
-#log{width:300px;position:absolute;}
+#log{width:300px;position:absolute;background-color:#fff;}
 .btn{position:relative;width:175px;height:59px;margin-bottom:5px;}
 .text-btn{position:absolute;top:19.5px;width:175px;float:left;font-size:12px;color:#413223;text-align:center;z-index:10;}
 .left-btn{position:relative;width:10px;height:59px;background-color:#232;float:left;}
