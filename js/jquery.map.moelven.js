@@ -8,6 +8,8 @@
         base.$el = $(el);
         base.el = el;
         base.ib = "";
+        base.activeSubId = 0;
+        base.activeMenuId = 0;
         base.markerArr = [];
         
         base.init = function(){
@@ -18,6 +20,10 @@
             
             $(base.options.menu + " a").on("click", function(e) {
 		        base.drawSubMenu($(this).data("nr"));
+	      		$(base.options.menu).each(function() {
+			        $(this).find(".right-btn").removeClass('btn-active');
+			    });
+	            $(this).find(".right-btn").addClass("btn-active");	
 		    });
 
 		    if (base.options.openall) {
@@ -62,26 +68,13 @@
         base.activateSubmenu = function() {
         	$(base.options.sub +" a").on("click", function(e) {
 	            e.preventDefault(); 
-	            base.log($(this).data("ref"));
-	            if (base.options.openall) {
-
-	            } else {
-	            	base.show($(this).data("ref"));
-	            }
-	            
-	            //base.log($(e.target).children().addClass("btn-box-active"));
-	            if ($(this).find('div').hasClass("btn-box-active")) {
-	            	base.log("ekpfnweofw");
-	            	$(this).find('div').removeClass("btn-box-active");
-	            } else {
-	            	$(this).find('div').addClass("btn-box-active");	
-	            }
-	            
-
+	            base.log($(base.options.sub).children().length);
+	      		$(base.options.sub+" div").each(function(){
+			        $(this).removeClass('btn-box-active');
+			    });
+		        $(this).find('div').addClass("btn-box-active");
+		        base.show($(this).data("ref"));
 	        });
-
-        	//check btns
-
         }
 
         base.showAll = function(groupID) {
@@ -106,6 +99,9 @@
 
         base.createMarker = function(groupID, item) {
         	base.log("marker arr: "+base.markerArr.length);
+        	if (base.markerArr.length > 0) {
+        		base.clearmarkers();
+        	}
         	var dest = new google.maps.LatLng(base.options.mapdata[groupID].data[item].lat, base.options.mapdata[groupID].data[item].lng);
     		var image = {
 	            url: base.options.imgurl+"/arrow_"+ base.options.mapdata[groupID].title.toLowerCase()+".png",
@@ -155,7 +151,7 @@
 	        base.ib = new InfoBox();
 	        //open info 
 	        base.ib.setOptions(opt);
-	        //base.ib.open(base.options.map, marker);
+	        base.ib.open(base.options.map, marker);
 	        google.maps.event.addListener(marker, "click", function (e) {
 	            base.ib.setOptions(opt);
 	            base.ib.open(base.options.map, this);

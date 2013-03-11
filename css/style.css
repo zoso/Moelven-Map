@@ -10,8 +10,7 @@
 .bygg-bg{background-color:#9d443e;background-image:-webkit-linear-gradient(top, #9d443e, #be827e);background-image:-moz-linear-gradient(top, #9d443e, #be827e);background-image:-o-linear-gradient(top, #9d443e, #be827e);background-image:-ms-linear-gradient(top, #9d443e, #be827e);background-image:linear-gradient(top, #9d443e, #be827e);}
 .btn:hover .right-btn{opacity:1;}
 .btn:hover .text-btn{color:#fff;}
-.btn-active .right-btn{opacity:1;}
-.btn-active .text-btn{color:#fff;}
+.btn-active{opacity:1;color:#fff;}
 .btn-box{position:relative;font-size:10px;width:171px;height:57px;margin-left:5px;margin-bottom:5px;border:1px solid #f1f1ef;text-align:center;float:left;color:#413223;}
 .btn-box-active{background-color:#e2dfdb;}
 .btn-box:hover{border:1px solid #e2dfdb;}
