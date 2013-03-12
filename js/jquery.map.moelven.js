@@ -26,12 +26,9 @@
 	            $(this).find(".right-btn").addClass("btn-active");	
 		    });
 
-		    if (base.options.openall) {
-	        	base.showAll(0);
-	        } else {
-	        	base.log("open one and one");
-	        }
+	     	//first run
 	        base.drawSubMenu(0);
+	        $(base.options.menu).find(".right-btn:first").addClass("btn-active");
         };
         
         base.log = function(str) {
@@ -40,7 +37,6 @@
         }
 
         base.drawSubMenu = function(id) {
-        	base.log("> "+id);
 	        if ($(base.options.sub).children().length > 0) {
 	            $(base.options.sub).html('');
 	        }
@@ -60,9 +56,7 @@
 	            $(base.options.sub).append(str);
 	        }
 	        base.activateSubmenu();
-	        if (base.options.openall) {
-	        	base.showAll(id);				
-	        }
+	        base.showAll(id);
         }
 
         base.activateSubmenu = function() {
@@ -78,12 +72,14 @@
         }
 
         base.showAll = function(groupID) {
+        	base.clearmarkers();
         	for (var i = 0; i < base.options.mapdata[groupID].data.length; i++) {
 	            base.createMarker(groupID, i);
 	        }
         }
 
         base.show = function(d) {
+        	base.clearmarkers();
         	var arr = d.split(",");	
      		base.createMarker(arr[0], arr[1]);
         }
@@ -98,9 +94,8 @@
         }
 
         base.createMarker = function(groupID, item) {
-        	base.log("marker arr: "+base.markerArr.length);
         	if (base.markerArr.length > 0) {
-        		base.clearmarkers();
+        		
         	}
         	var dest = new google.maps.LatLng(base.options.mapdata[groupID].data[item].lat, base.options.mapdata[groupID].data[item].lng);
     		var image = {
@@ -123,11 +118,9 @@
         }
 
         base.createInfobox = function(name, address, postalnr, marker) {
-        	//if (base.ib) base.ib.close();
         	var info =  "<div class='infobox'><span style='font-weight: bold;'>"+name+"</span>";
 	        info += "<br>"+address;
 	        info += "<br>"+postalnr+"</div>";
-	        //var col = getColor(mapdata[arr[0]].name, "sub");
 	        var opt = {
 	            content: info,
 	            disableAutoPan: false,
@@ -151,17 +144,14 @@
 	        base.ib = new InfoBox();
 	        //open info 
 	        base.ib.setOptions(opt);
-	        base.ib.open(base.options.map, marker);
+	        //base.ib.open(base.options.map, marker);
 	        google.maps.event.addListener(marker, "click", function (e) {
 	            base.ib.setOptions(opt);
 	            base.ib.open(base.options.map, this);
 	        });
         }
-
         base.init();
     };
-
-    
     
     $.fn.MoelvenMap.defaultOptions = {
         version: 1,
@@ -175,12 +165,6 @@
         return this.each(function(){
             (new $.fn.MoelvenMap(this, options));
         });
-    };
-    
-    // This function breaks the chain, but returns
-    // the fn.MoelvenMap if it has been attached to the object.
-    $.fn.getfn_MoelvenMap = function(){
-        this.data("fn.MoelvenMap");
     };
     
 })(jQuery);
