@@ -75,8 +75,8 @@
 				"address": "",
 				"postalnr" : "SE-69127 Karlskoga",
 				"phone" : "",
-				"lat": 59.346110976532024,
-				"lng": 14.496943999999985
+				"lat": 59.316065614874205,
+				"lng": 14.58711680355079
 			},
 			{
 				"name": "Moelven Ransbysågen AB",
