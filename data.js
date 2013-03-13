@@ -3,28 +3,36 @@
 		"title": "Konsern",
 		"data" : [
 			{
-				"name": "Konsern 12",
-				"address" : "",
-				"postalnr" : "",
+				"name": "Moelven Skog AB",
+				"address" : "Strömstadv. 2",
+				"postalnr" : "66831 ED",
 				"phone": "",
 				"lat" : "59.66528588622045",
 				"lng" : "12.990542849999997"
 			},
 			{
-				"name": "Konsern 2",
-				"address" : "",
-				"postalnr" : "",
+				"name": "Moelven Vänerbränsle AB",
+				"address" : "Fosby Vestre",
+				"postalnr" : "1798 Aremark",
 				"phone": "",
 				"lat" : "58.66528588622045",
 				"lng" : "16.990542849999997"
 			},
 			{
-				"name": "Konsern 3",
-				"address" : "",
-				"postalnr" : "",
+				"name": "Moelven Virke",
+				"address" : "Industrivegen 2",
+				"postalnr" : "2390 Moelv",
 				"phone": "",
-				"lat" : "60.66528588622045",
-				"lng" : "10.990542849999997"
+				"lat" : "60.93358672857066",
+				"lng" : "10.691110600000002"
+			},
+			{
+				"name": "Moelven Bioenergi",
+				"address" : "Industrivegen 2",
+				"postalnr" : "2390 Moelv",
+				"phone": "",
+				"lat" : "60.93358672857066",
+				"lng" : "10.691110600000002"
 			},
 			{
 				"name": "Konsern 4",
@@ -362,8 +370,8 @@
 			},
 			{
 				"name": "Moelven UK Ltd.",
-				"address": "Vicarage Farm",
-				"postalnr" : "Eastleigh, HANTS SO50 7HD, United Kingdom",
+				"address": "Unit 1, Barton Farm",
+				"postalnr" : "Eastleigh, Hampshire, SO50 6RP",
 				"phone" : "",
 				"lat": 50.97645078254901,
 				"lng": -1.3139801598786094
@@ -378,11 +386,11 @@
 			},
 			{
 				"name": "Moelven Elektro AB",
-				"address": "",
-				"postalnr" : "",
+				"address": "Fraktflygargatan 7",
+				"postalnr" : "12830 Skarnäck, Stockholms län",
 				"phone" : "",
-				"lat": 59.91294,
-				"lng": 10.15125
+				"lat": 59.26544682670876,
+				"lng": 18.124171000000047
 			},
 			{
 				"name": "Moelven ByggModul AS",
