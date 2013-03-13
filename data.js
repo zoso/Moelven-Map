@@ -64,11 +64,11 @@
 			},
 			{
 				"name": "Moelven Årjäng Såg AB",
-				"address": "",
+				"address": "Kyrkerudsvägen 3",
 				"postalnr":"SE-672 23 Årjäng",
 				"phone":"",
-				"lat": 59.385079047815466,
-				"lng": 12.134091003372992
+				"lat": 59.38365902683463,
+				"lng": 12.116705199999956
 			},
 			{
 				"name": "Moelven Valåsen AB",
@@ -152,11 +152,11 @@
 			},
 			{
 				"name": "Moelven Tom Heurlin AB",
-				"address": "",
+				"address": "Lilla Mossen 111",
 				"postalnr" : "SE-66297 Ånimskog",
 				"phone" : "",
-				"lat": 58.88333303068396,
-				"lng": 12.566667000000052
+				"lat": 58.88095222630527,
+				"lng": 12.567944300000022
 			},
 			{
 				"name": "UJ-Trading AB",
@@ -172,12 +172,20 @@
 		"title": "Wood",
 		"data" : [
 			{
-				"name": "Moelven Wood AS<br>Moelven Wood AB<br>Moelven Danmark A/S",
+				"name": "Moelven Wood AB<br>Moelven Danmark A/S",
 				"address": "",
 				"postalnr" : "",
 				"phone" : "",
 				"lat": 59.91294,
 				"lng": 10.15125
+			},
+			{
+				"name": "Moelven Wood AS",
+				"address": "Sagveien",
+				"postalnr" : "2074 Eidsvoll Verk",
+				"phone" : "",
+				"lat": 60.297959926117024,
+				"lng": 11.161396557702691
 			},
 			{
 				"name": "Moelven Valåsen Wood AB",
@@ -245,11 +253,11 @@
 			},
 			{
 				"name": "Moelven Värmlands Trä AB",
-				"address": "",
+				"address": "Fabriksgatan 6",
 				"postalnr" : "SE-661 23 Säffle",
 				"phone" : "",
-				"lat": 59.26688992671029,
-				"lng": 13.029901549999977
+				"lat": 59.12816859235894,
+				"lng": 12.916925896295076
 			},
 			{
 				"name": "Moelven Vänerply AB",
@@ -325,11 +333,11 @@
 			},
 			{
 				"name": "Moelven Eidsvoll AS",
-				"address": "Myrersvingen 370",
+				"address": "Myhrersvingen 9",
 				"postalnr" : "NO-2080 Eidsvoll",
 				"phone" : "Tel. +47 63 92 48 80",
-				"lat": 60.32921022596573,
-				"lng": 11.223439646295231
+				"lat": 60.32921081258596,
+				"lng": 11.223475651956164
 			},
 			{
 				"name": "Moelven Lovene AB",
