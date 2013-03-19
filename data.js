@@ -207,8 +207,8 @@
 				"address": "Løvestad Industriområde",
 				"postalnr" : "NO-1820 Spydeberg",
 				"phone" : "Tel. +47 69 83 67 10",
-				"lat": 59.622365831866055,
-				"lng": 11.043929996374553
+				"lat": 59.621523946,
+				"lng": 11.0432553291
 			},
 			{
 				"name": "Moelven Langmoen AS",
