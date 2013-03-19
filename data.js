@@ -172,20 +172,27 @@
 		"title": "Wood",
 		"data" : [
 			{
-				"name": "Moelven Wood AB<br>Moelven Danmark A/S",
-				"address": "",
-				"postalnr" : "",
-				"phone" : "",
-				"lat": 59.91294,
-				"lng": 10.15125
-			},
-			{
 				"name": "Moelven Wood AS",
 				"address": "Sagveien",
 				"postalnr" : "2074 Eidsvoll Verk",
 				"phone" : "",
 				"lat": 60.297959926117024,
 				"lng": 11.161396557702691
+			},
+			{
+				"name": "Moelven Danmark A/S",
+				"address": "Herstedøstervej 27-29 C, 1.sal.",
+				"postalnr" : "DK-2620 Albertslund",
+				"phone" : "",
+				"lat": 55.670120551869324,
+				"lng": 12.370032293323558
+			},{
+				"name": "Moelven Wood AB",
+				"address": "Skårevägen 60",
+				"postalnr" : "65350 Karlstad",
+				"phone" : "",
+				"lat": 59.43345,
+				"lng": 13.4458
 			},
 			{
 				"name": "Moelven Valåsen Wood AB",
