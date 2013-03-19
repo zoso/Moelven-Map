@@ -7,32 +7,32 @@
 				"address" : "Strömstadv. 2",
 				"postalnr" : "66831 ED",
 				"phone": "",
-				"lat" : "59.66528588622045",
-				"lng" : "12.990542849999997"
+				"lat" : 59.66528588622045,
+				"lng" : 12.990542849999997
 			},
 			{
 				"name": "Moelven Vänerbränsle AB",
 				"address" : "Fosby Vestre",
 				"postalnr" : "1798 Aremark",
 				"phone": "",
-				"lat" : "58.66528588622045",
-				"lng" : "16.990542849999997"
+				"lat" : 58.66528588622045,
+				"lng" : 16.990542849999997
 			},
 			{
 				"name": "Moelven Virke",
 				"address" : "Industrivegen 2",
 				"postalnr" : "2390 Moelv",
 				"phone": "",
-				"lat" : "60.93358672857066",
-				"lng" : "10.691110600000002"
+				"lat" : 60.93358672857066,
+				"lng" : 10.691110600000002
 			},
 			{
 				"name": "Moelven Bioenergi",
 				"address" : "Industrivegen 2",
 				"postalnr" : "2390 Moelv",
 				"phone": "",
-				"lat" : "60.93358672857066",
-				"lng" : "10.691110600000002"
+				"lat" : 60.93358672857066,
+				"lng" : 10.691110600000002
 			}
 		]
 	},
