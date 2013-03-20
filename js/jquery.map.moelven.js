@@ -76,12 +76,14 @@
         	for (var i = 0; i < base.options.mapdata[groupID].data.length; i++) {
 	            base.createMarker(groupID, i);
 	        }
+	         base.options.map.setZoom(base.options.zoomAll);
         }
 
         base.show = function(d) {
         	base.clearmarkers();
         	var arr = d.split(",");	
      		base.createMarker(arr[0], arr[1]);
+     		base.options.map.setZoom(base.options.zoomOne);
         }
         
         base.clearmarkers = function() {
@@ -111,6 +113,7 @@
 				icon: image,
 				zIndex: 0
 	        });
+
 	        base.markerArr.push(marker);
 	        if (base.ib) base.ib.close();
 	        base.createInfobox(base.options.mapdata[groupID].data[item].name, base.options.mapdata[groupID].data[item].address, base.options.mapdata[groupID].data[item].postalnr, marker);
@@ -158,7 +161,9 @@
         log: "",
         map: "",
         menu: "",
-        mapdata: ""
+        mapdata: "",
+        zoomAll: 6,
+        zoomOne: 14
     };
     
     $.fn.fn_MoelvenMap = function(options){

@@ -91,29 +91,87 @@
         var map;
         function initialize() {
             var styles = [
-                    {
-                        stylers: [
-                            { saturation: -100},
-                            { gamma: 2}
-                        ]
-                    },
-                    {
-                        featureType: 'all'
-                    }
-                ];
+                {
+                    stylers: [
+                        { saturation: -100},
+                        { gamma: 2}
+                    ]
+                },
+                {
+                    featureType: 'all'
+                }
+            ];
+
+            /*var styles = [
+            {
+                featureType: "water",
+                elementType: "all",
+                stylers: [
+                    { color: '#ededed' },
+                    { visibility: "on" }
+                ]
+            },
+            {
+             featureType: "road",
+              stylers: [
+               { "visibility": "off" }
+                  ]
+                 },
+          {
+              featureType: "transit",
+               stylers: [
+               { "visibility": "off" }
+                  ]
+                },{
+                   featureType: "administrative",
+             stylers: [
+               { "visibility": "off" }
+                ]
+             },  {
+                featureType: "landscape",
+                             elementType: "all",
+                            stylers: [
+                                { "color": "#413223" }
+                            ]
+                            },{
+                            featureType: "poi",
+                             stylers: [
+                             { "color": "#f1f1ef" }
+
+                            ]
+            },
+            {
+     elementType: "labels",
+stylers: [
+  { "visibility": "off" }
+]
+}
+        ]; */
+
             var styledMap = new google.maps.StyledMapType(styles, {name: "Grayscaled"});
             var mapOptions = {
                 center: new google.maps.LatLng(59.91294, 10.75125),
                 zoom: 5,
-                disableDefaultUI: false,
+                disableDefaultUI: true,
                 scrollwheel: false,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
+                panControl:true,
+                zoomControl:true,
+                /*mapTypeControl:false,
+                scaleControl:false,
+                streetViewControl:false,
+                overviewMapControl:false,
+                rotateControl:false,*/
+                zoomControlOptions: {
+                  style:google.maps.ZoomControlStyle.SMALL
+                },
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                styles: styles
             };
 
             map = new google.maps.Map(document.getElementById("map_canvas"),
                 mapOptions);
-            map.mapTypes.set("map_style", styledMap);
-            map.setMapTypeId("map_style");
+            /*map.mapTypes.set("map_style", styledMap);
+            map.setMapTypeId("map_style");*/
         };
         initialize();
         //get data
@@ -146,7 +204,9 @@
                 sub: "#map-content",
                 mapdata: data,
                 openall: false,
-                imgurl: "img/"
+                imgurl: "img/",
+                zoomAll: 5,
+                zoomOne: 16
             });
         });
 
